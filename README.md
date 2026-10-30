@@ -1,8 +1,8 @@
 # Dungeon Explorer
 
-A small dungeon scene drawn with Canvas and TypeScript.
+A small dungeon to explore, drawn with Canvas and TypeScript.
 
-The map has connected rooms, lanterns, an explorer, and a legend. The current build is a static scene; the explorer does not move.
+Explore connected rooms and lantern-lit passages. Click the map or Tab to it, then move with arrow keys or WASD. Stone walls block your path; your position appears beside the map.
 
 ## Run locally
 
@@ -18,6 +18,7 @@ Open the local URL printed in the terminal.
 ## Development
 
 ```sh
+npm test        # Run regression checks
 npm run check   # Check TypeScript
 npm run build   # Check types and build into dist/
 npm run preview # Serve the build locally

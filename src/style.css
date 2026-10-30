@@ -16,6 +16,9 @@ h1 { font: 500 clamp(36px, 5vw, 56px)/1.1 Georgia, serif; letter-spacing: -.035e
 .panel-heading > span { font: 10px ui-monospace, monospace; color: #b3b9a1; letter-spacing: .08em; }
 .map-frame { padding: 25px; background: #111c17; }
 canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+canvas:focus-visible { outline: 3px solid #ddbc73; outline-offset: 5px; }
+.controls { margin: 0; padding: 0 22px 18px; color: #c4ccbc; font-size: 12px; line-height: 1.6; }
+#movement-status { min-height: 1.6em; }
 .legend { display: flex; list-style: none; margin: 0; padding: 18px 22px; flex-wrap: wrap; gap: 14px 22px; font-size: 11px; color: #c4ccbc; }
 .legend li { display: flex; align-items: center; gap: 7px; }
 .swatch { display: inline-block; width: 11px; height: 11px; border: 1px solid #ffffff25; }
