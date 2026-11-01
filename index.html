@@ -12,21 +12,21 @@
     <div class="shell">
       <header class="masthead"><span class="brand-mark" aria-hidden="true">D</span><span>Dungeon Explorer</span><span class="edition">FIELD NOTES · 001</span></header>
       <main>
-        <div class="intro"><p class="eyebrow">BENEATH THE OLD FOREST</p><h1>A little room.<br />A bigger adventure.</h1><p>Stone walls, warm lanterns, and a path into the unknown.</p></div>
+        <div class="intro"><p class="eyebrow">BENEATH THE OLD FOREST</p><h1>Four hidden rooms.<br />A bigger adventure.</h1><p>Stone walls, warm lanterns, and a path into the unknown.</p></div>
         <div class="expedition">
           <section class="map-panel" aria-labelledby="map-title">
-            <div class="panel-heading"><h2 id="map-title">The antechamber</h2><span>ROOM 01</span></div>
-            <div class="map-frame"><canvas id="dungeon" tabindex="0" aria-describedby="movement-help movement-status" width="544" height="352" role="img" aria-label="A stone dungeon with two connected chambers. A gold-cloaked explorer stands in the western chamber, surrounded by dark stone walls and three lanterns.">A gold-cloaked explorer stands in a small stone dungeon.</canvas></div>
+            <div class="panel-heading"><h2 id="map-title">The lantern chambers</h2><span>4 ROOMS</span></div>
+            <div class="map-frame"><canvas id="dungeon" tabindex="0" aria-describedby="movement-help movement-status" width="800" height="544" role="img" aria-label="A stone dungeon with four connected chambers, lanterns, an explorer, and stairs.">A gold-cloaked explorer stands in a small stone dungeon.</canvas></div>
             <ul class="legend" aria-label="Map legend">
               <li><span class="swatch explorer" aria-hidden="true"></span>Explorer</li>
               <li><span class="swatch floor" aria-hidden="true"></span>Open floor</li>
               <li><span class="swatch wall" aria-hidden="true"></span>Stone wall</li>
               <li><span class="swatch lantern" aria-hidden="true"></span>Lantern</li>
-            </ul>
+            <li><span class="swatch stairs" aria-hidden="true"></span>Stairs</li></ul>
             <p class="controls" id="movement-help">Click the map or Tab to it, then use arrow keys or WASD to explore.</p>
             <p class="controls" id="movement-status" role="status">Ready to explore.</p>
           </section>
-          <aside class="field-card"><p class="eyebrow">YOUR FIELD GUIDE</p><h2>Every journey<br />begins somewhere.</h2><p>Beyond the trees, an old stairway disappears into the earth. You light your lantern and take a look around.</p><dl><div><dt>Location</dt><dd>The antechamber</dd></div><div><dt>Room size</dt><dd>17 × 11 tiles</dd></div><div><dt>Explorer</dt><dd id="position">Column 4, row 5</dd></div></dl><p class="note">“Leave a light behind.<br />You may need the way home.”</p></aside>
+          <aside class="field-card"><p class="eyebrow">YOUR FIELD GUIDE</p><h2>Every journey<br />begins somewhere.</h2><p>Beyond the trees, an old stairway disappears into the earth. You light your lantern and take a look around.</p><dl><div><dt>Location</dt><dd>The lantern chambers</dd></div><div><dt>Map size</dt><dd>25 × 17 tiles</dd></div><div><dt>Explorer</dt><dd id="position">Column 4, row 5</dd></div></dl><form id="seed-form"><label for="seed">Dungeon seed</label><input id="seed" name="seed" value="forest-light" maxlength="64" autocomplete="off" spellcheck="false" /><button type="submit">Explore seed</button><button id="new-seed" type="button">New seed</button><p>The same seed opens the same chambers.</p></form><p class="note">“Leave a light behind.<br />You may need the way home.”</p></aside>
         </div>
       </main>
       <footer>A small adventure, one room at a time.<span>EXPLORE WITH CURIOSITY.</span></footer>

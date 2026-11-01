@@ -2,7 +2,9 @@
 
 A small dungeon to explore, drawn with Canvas and TypeScript.
 
-Explore connected rooms and lantern-lit passages. Click the map or Tab to it, then move with arrow keys or WASD. Stone walls block your path; your position appears beside the map.
+Explore four rooms joined by lantern-lit corridors on a 25 × 17 tile map. Click the map or Tab to it, then move with arrow keys or WASD. Stone walls block your path; your position appears beside the map.
+
+Enter a dungeon seed and choose **Explore seed** to recreate a map from its starting position, or choose **New seed** for another layout. The same seed always generates the same chambers, with a reachable set of stairs.
 
 ## Run locally
 

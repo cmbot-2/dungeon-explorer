@@ -33,3 +33,13 @@ dt { color: #9eab9b; } dd { margin: 0; text-align: right; }
 footer { display: flex; justify-content: space-between; gap: 16px; padding: 32px 0; color: #8c9b8b; font-size: 11px; }
 footer span { font: 9px ui-monospace, monospace; letter-spacing: .1em; }
 @media (max-width: 740px) { .shell { padding: 0 20px; } .expedition { grid-template-columns: 1fr; } .intro { padding-top: 35px; } .map-frame { padding: 12px; } .field-card h2 br { display: none; } .edition { font-size: 8px; } footer span { display: none; } }
+
+.stairs { background: #a7cec0; }
+#seed-form { display: grid; gap: 10px; margin: 24px 0; }
+#seed-form label { font-size: 12px; }
+#seed-form input, #seed-form button { width: 100%; min-width: 0; padding: 11px; border: 1px solid #63725b; border-radius: 3px; font: inherit; font-size: 13px; }
+#seed-form input { background: #16251f; color: #eceddb; }
+#seed-form button { background: #ddbc73; color: #233429; cursor: pointer; }
+#seed-form #new-seed { background: transparent; color: #ddbc73; }
+#seed-form p { margin: 0; font-size: 11px; line-height: 1.6; color: #b6c0b0; }
+#seed-form :focus-visible { outline: 3px solid #ddbc73; outline-offset: 3px; }
