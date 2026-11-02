@@ -4,6 +4,8 @@ A small dungeon to explore, drawn with Canvas and TypeScript.
 
 Explore four rooms joined by lantern-lit corridors on a 25 × 17 tile map. Click the map or Tab to it, then move with arrow keys or WASD. Stone walls block your path; your position appears beside the map.
 
+Your lantern reveals tiles within three horizontal/vertical steps, forming a diamond around you. Walls do not block this radius. Unknown areas stay dark; previously revealed tiles remain dimly visible when you move away. The stairs' location stays hidden until discovered. Restarting or choosing a seed clears exploration.
+
 Enter a dungeon seed and choose **Explore seed** to recreate a map from its starting position, or choose **New seed** for another layout. The same seed always generates the same chambers, with a reachable set of stairs.
 
 Reach the stairs to finish your run. Movement stops and a completion message appears. **Restart this dungeon** returns to the beginning of the same map, even if you have edited the seed field. You can restart during a run too.

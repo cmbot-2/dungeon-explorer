@@ -1,6 +1,7 @@
 import './style.css';
 import { createRun, moveInRun } from './run';
 import type { Direction } from './dungeon';
+import { tileKey } from './exploration';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#dungeon')!;
 const context = canvas.getContext('2d');
@@ -26,6 +27,11 @@ function draw() {
     [...row].forEach((tile, x) => {
       const left = x * tileSize;
       const top = y * tileSize;
+      const key = tileKey({ x, y });
+      if (!run.explored.has(key)) {
+        block(left, top, tileSize, tileSize, '#080f13');
+        return;
+      }
       if (tile === '#') {
         block(left, top, 32, 32, '#1b2b29');
         block(left + 1, top + 1, 30, 25, '#354842');
@@ -59,11 +65,15 @@ function draw() {
           block(left + 20, top + 25, 4, 5, '#303a32');
         }
       }
+      if (!run.visible.has(key)) block(left, top, tileSize, tileSize, '#080f13b3');
     });
   });
   position.textContent = `Column ${player.x + 1}, row ${player.y + 1}`;
   win.hidden = !run.finished;
-  canvas.setAttribute('aria-label', `Stone dungeon with four connected chambers. Explorer at column ${player.x + 1}, row ${player.y + 1}. Stairs at column ${dungeon.exit.x + 1}, row ${dungeon.exit.y + 1}.${run.finished ? ' Run complete.' : ''}`);
+  const stairs = run.explored.has(tileKey(dungeon.exit))
+    ? `Stairs discovered at column ${dungeon.exit.x + 1}, row ${dungeon.exit.y + 1}.`
+    : 'Stairs undiscovered.';
+  canvas.setAttribute('aria-label', `Stone dungeon. Explorer at column ${player.x + 1}, row ${player.y + 1}. ${run.explored.size} of ${dungeon.tiles.reduce((count, row) => count + row.length, 0)} tiles explored. ${stairs}${run.finished ? ' Run complete.' : ''}`);
 }
 
 const keys: Record<string, Direction | undefined> = {
