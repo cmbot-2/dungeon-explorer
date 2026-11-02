@@ -1,5 +1,5 @@
 import './style.css';
-import { generateDungeon, move } from './dungeon';
+import { createRun, moveInRun } from './run';
 import type { Direction } from './dungeon';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#dungeon')!;
@@ -9,8 +9,9 @@ const ctx = context;
 const tileSize = 32;
 ctx.imageSmoothingEnabled = false;
 const seedInput = document.querySelector<HTMLInputElement>('#seed')!;
-let dungeon = generateDungeon(seedInput.value);
-let player = { ...dungeon.start };
+let run = createRun(seedInput.value);
+const win = document.querySelector<HTMLElement>('#win')!;
+const restart = document.querySelector<HTMLButtonElement>('#restart')!;
 const position = document.querySelector<HTMLElement>('#position')!;
 const status = document.querySelector<HTMLElement>('#movement-status')!;
 
@@ -20,6 +21,7 @@ function block(x: number, y: number, width: number, height: number, color: strin
 }
 
 function draw() {
+  const { dungeon, player } = run;
   dungeon.tiles.forEach((row, y) => {
     [...row].forEach((tile, x) => {
       const left = x * tileSize;
@@ -60,7 +62,8 @@ function draw() {
     });
   });
   position.textContent = `Column ${player.x + 1}, row ${player.y + 1}`;
-  canvas.setAttribute('aria-label', `Stone dungeon with four connected chambers. Explorer at column ${player.x + 1}, row ${player.y + 1}. Stairs at column ${dungeon.exit.x + 1}, row ${dungeon.exit.y + 1}.`);
+  win.hidden = !run.finished;
+  canvas.setAttribute('aria-label', `Stone dungeon with four connected chambers. Explorer at column ${player.x + 1}, row ${player.y + 1}. Stairs at column ${dungeon.exit.x + 1}, row ${dungeon.exit.y + 1}.${run.finished ? ' Run complete.' : ''}`);
 }
 
 const keys: Record<string, Direction | undefined> = {
@@ -73,21 +76,22 @@ canvas.addEventListener('keydown', (event) => {
   const direction = keys[event.key.length === 1 ? event.key.toLowerCase() : event.key];
   if (!direction) return;
   event.preventDefault();
-  const next = move(dungeon.tiles, player, direction);
-  if (next === player) {
+  if (run.finished) return;
+  const next = moveInRun(run, direction);
+  if (next === run) {
     status.textContent = 'A stone wall blocks the way.';
     return;
   }
-  player = next;
+  run = next;
   draw();
-  status.textContent = player.x === dungeon.exit.x && player.y === dungeon.exit.y
-    ? 'You found the stairs. Keep exploring the chambers.' : position.textContent;
+  status.textContent = run.finished
+    ? 'You reached the stairs! Run complete. Restart this dungeon or try a new seed.' : position.textContent;
+  if (run.finished) restart.focus({ preventScroll: true });
 });
 
 function exploreSeed() {
   seedInput.value = seedInput.value.trim() || 'forest-light';
-  dungeon = generateDungeon(seedInput.value);
-  player = { ...dungeon.start };
+  run = createRun(seedInput.value);
   draw();
   status.textContent = `Exploring seed ${seedInput.value}. Four chambers, one connected path.`;
   canvas.focus({ preventScroll: true });
@@ -98,6 +102,10 @@ document.querySelector<HTMLFormElement>('#seed-form')!.addEventListener('submit'
 });
 document.querySelector('#new-seed')!.addEventListener('click', () => {
   seedInput.value = crypto.getRandomValues(new Uint32Array(1))[0]!.toString(36);
+  exploreSeed();
+});
+restart.addEventListener('click', () => {
+  seedInput.value = run.seed;
   exploreSeed();
 });
 draw();
