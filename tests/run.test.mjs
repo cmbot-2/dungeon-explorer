@@ -24,6 +24,7 @@ test('a reachable exit ends the run, freezes movement, and allows a fresh replay
       run = moveInRun(run, direction);
     }
     assert.equal(run.finished, true);
+    assert.equal(run.turns, route.length);
     assert.deepEqual(run.player, run.dungeon.exit);
     for (const direction of ['up', 'down', 'left', 'right']) assert.equal(moveInRun(run, direction), run);
     assert.deepEqual(createRun(seed), original);

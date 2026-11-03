@@ -1,5 +1,5 @@
 import './style.css';
-import { createRun, moveInRun } from './run';
+import { createRun, moveInRun, waitInRun } from './run';
 import type { Direction } from './dungeon';
 import { tileKey } from './exploration';
 
@@ -15,6 +15,8 @@ const win = document.querySelector<HTMLElement>('#win')!;
 const restart = document.querySelector<HTMLButtonElement>('#restart')!;
 const position = document.querySelector<HTMLElement>('#position')!;
 const status = document.querySelector<HTMLElement>('#movement-status')!;
+const turns = document.querySelector<HTMLElement>('#turns')!;
+const wait = document.querySelector<HTMLButtonElement>('#wait')!;
 
 function block(x: number, y: number, width: number, height: number, color: string) {
   ctx.fillStyle = color;
@@ -70,11 +72,21 @@ function draw() {
   });
   position.textContent = `Column ${player.x + 1}, row ${player.y + 1}`;
   win.hidden = !run.finished;
+  turns.textContent = String(run.turns);
+  wait.disabled = run.finished;
   const stairs = run.explored.has(tileKey(dungeon.exit))
     ? `Stairs discovered at column ${dungeon.exit.x + 1}, row ${dungeon.exit.y + 1}.`
     : 'Stairs undiscovered.';
-  canvas.setAttribute('aria-label', `Stone dungeon. Explorer at column ${player.x + 1}, row ${player.y + 1}. ${run.explored.size} of ${dungeon.tiles.reduce((count, row) => count + row.length, 0)} tiles explored. ${stairs}${run.finished ? ' Run complete.' : ''}`);
+  canvas.setAttribute('aria-label', `Stone dungeon. Turn ${run.turns}. Explorer at column ${player.x + 1}, row ${player.y + 1}. ${run.explored.size} of ${dungeon.tiles.reduce((count, row) => count + row.length, 0)} tiles explored. ${stairs}${run.finished ? ' Run complete.' : ''}`);
 }
+
+function waitTurn() {
+  if (run.finished) return;
+  run = waitInRun(run);
+  draw();
+  status.textContent = `Turn ${run.turns}. You wait and listen.`;
+}
+wait.addEventListener('click', waitTurn);
 
 const keys: Record<string, Direction | undefined> = {
   ArrowUp: 'up', w: 'up', ArrowDown: 'down', s: 'down',
@@ -83,19 +95,25 @@ const keys: Record<string, Direction | undefined> = {
 canvas.addEventListener('pointerdown', () => canvas.focus());
 canvas.addEventListener('keydown', (event) => {
   if (event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+  if (event.key === '.') {
+    event.preventDefault();
+    waitTurn();
+    return;
+  }
   const direction = keys[event.key.length === 1 ? event.key.toLowerCase() : event.key];
   if (!direction) return;
   event.preventDefault();
   if (run.finished) return;
   const next = moveInRun(run, direction);
   if (next === run) {
-    status.textContent = 'A stone wall blocks the way.';
+    status.textContent = 'A stone wall blocks the way. No turn spent.';
     return;
   }
   run = next;
   draw();
   status.textContent = run.finished
-    ? 'You reached the stairs! Run complete. Restart this dungeon or try a new seed.' : position.textContent;
+    ? `You reached the stairs in ${run.turns} turns! Restart this dungeon or try a new seed.`
+    : `Turn ${run.turns}. ${position.textContent}.`;
   if (run.finished) restart.focus({ preventScroll: true });
 });
 

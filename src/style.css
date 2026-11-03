@@ -48,5 +48,7 @@ footer span { font: 9px ui-monospace, monospace; letter-spacing: .1em; }
 #win { border-left: 3px solid #ddbc73; padding: 4px 16px; margin-bottom: 18px; }
 #win h2 { font: 24px Georgia, serif; color: #ddbc73; margin: 0 0 8px; }
 #win p { font-size: 13px; line-height: 1.6; margin: 0; }
-#restart { padding: 11px 16px; border: 1px solid #ddbc73; border-radius: 3px; background: #ddbc73; color: #233429; font: inherit; font-size: 13px; cursor: pointer; }
-#restart:focus-visible { outline: 3px solid #ddbc73; outline-offset: 4px; }
+#restart, #wait { padding: 11px 16px; margin: 4px 8px 4px 0; border: 1px solid #ddbc73; border-radius: 3px; background: #ddbc73; color: #233429; font: inherit; font-size: 13px; cursor: pointer; }
+#wait { background: transparent; color: #ddbc73; }
+#wait:disabled { opacity: .5; cursor: default; }
+#restart:focus-visible, #wait:focus-visible { outline: 3px solid #ddbc73; outline-offset: 4px; }
